@@ -1,5 +1,10 @@
 import app from "./app.js";
 import logger from "./configs/logger.config.js";
+import connectToMongo from "./db.js";
+
+//mongodb connection
+connectToMongo();
+
 //env variables
 const PORT = process.env.PORT;
 
