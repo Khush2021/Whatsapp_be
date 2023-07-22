@@ -6,12 +6,18 @@ import {
   refreshToken,
   register,
 } from "../controllers/auth.controller.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.route("/register").post(trimRequest.all, register);
-router.route("/register").post(trimRequest.all, login);
-router.route("/register").post(trimRequest.all, logout);
-router.route("/register").post(trimRequest.all, refreshToken);
+router.route("/login").post(trimRequest.all, login);
+router.route("/logout").post(trimRequest.all, logout);
+router.route("/refreshtoken").post(trimRequest.all, refreshToken);
+router
+  .route("/testingauthmiddleware")
+  .get(trimRequest.all, authMiddleware, (req, res) => {
+    res.send(req.user);
+  });
 
 export default router;
