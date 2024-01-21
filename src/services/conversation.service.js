@@ -26,13 +26,22 @@ export const doesConversationExist = async (sender_id, receiver_id) => {
 
 export const createConversation = async (data) => {
   const newConvo = await ConversationModel.create(data);
+  if (!newConvo)
+    throw createHttpError.BadRequest("Oops...Something went wrong !");
+  return newConvo;
+};
 
-  if (!newConvo) {
-    throw createHttpError.BadRequest("Oops... something went wrong!");
-  }
-  let populatedConvo = ConversationModel.findOne({
-    _id: newConvo._id,
-  }).populate("users", "-password");
+export const populateConversation = async (
+  id,
+  fieldToPopulate,
+  fieldsToRemove
+) => {
+  const populatedConvo = await ConversationModel.findOne({ _id: id }).populate(
+    fieldToPopulate,
+    fieldsToRemove
+  );
+  if (!populatedConvo)
+    throw createHttpError.BadRequest("Oops...Something went wrong !");
   return populatedConvo;
 };
 

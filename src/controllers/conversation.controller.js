@@ -4,6 +4,7 @@ import {
   doesConversationExist,
   createConversation,
   getUserConversations,
+  populateConversation,
 } from "../services/conversation.service.js";
 import { findUser } from "../services/user.service.js";
 
@@ -34,7 +35,12 @@ export const create_open_conversation = async (req, res, next) => {
         users: [sender_id, receiver_id],
       };
       const newConvo = await createConversation(convoData);
-      res.json(newConvo);
+      const populatedConvo = await populateConversation(
+        newConvo._id,
+        "users",
+        "-password"
+      );
+      res.status(200).json(populatedConvo);
     }
   } catch (error) {
     next(error);
