@@ -6,3 +6,13 @@ export const findUser = async (userId) => {
   if (!user) throw createHttpError.Unauthorized("please log in.");
   return user;
 };
+
+export const searchUser = async (keyword) => {
+  const users = await UserModel.find({
+    $or: [
+      { name: { $regex: keyword, $options: "i" } },
+      { email: { $regex: keyword, $options: "i" } },
+    ],
+  });
+  return users;
+};
