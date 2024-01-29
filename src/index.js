@@ -1,6 +1,7 @@
 import app from "./app.js";
 import logger from "./configs/logger.config.js";
 import connectToMongo from "./db.js";
+import { Server } from "socket.io";
 
 //mongodb connection
 connectToMongo();
@@ -12,6 +13,18 @@ let server;
 server = app.listen(PORT, () => {
   logger.info(`Server is listening at ${PORT}`);
   //   throw new Error("error in server");
+});
+
+//socket.io server
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: process.env.CLIENT_ENDPOINT,
+  },
+});
+
+io.on("connection", (socket) => {
+  logger.info("socket io connected succesfully");
 });
 
 const exitHandler = () => {
