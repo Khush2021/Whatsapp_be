@@ -15,7 +15,6 @@ export const doesConversationExist = async (sender_id, receiver_id) => {
   if (!convos) {
     throw createHttpError.BadRequest("Oops... something went wrong!");
   }
-
   //populate message model
   convos = await UserModel.populate(convos, {
     path: "latestMessage.sender",
