@@ -1,3 +1,4 @@
+import SocketServer from "./SocketServer.js";
 import app from "./app.js";
 import logger from "./configs/logger.config.js";
 import connectToMongo from "./db.js";
@@ -25,6 +26,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   logger.info("socket io connected succesfully");
+  SocketServer(socket);
 });
 
 const exitHandler = () => {
