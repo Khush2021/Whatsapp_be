@@ -26,7 +26,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   logger.info("socket io connected succesfully");
-  SocketServer(socket);
+  SocketServer(socket, io);
 });
 
 const exitHandler = () => {
