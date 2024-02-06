@@ -6,7 +6,6 @@ const { MONGO_URL } = process.env;
 
 // mongodb connection
 const connectToMongo = () => {
-  mongoose.set("debug", false);
   mongoose
     .connect(MONGO_URL, {
       useNewUrlParser: true,
